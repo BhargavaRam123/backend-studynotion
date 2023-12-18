@@ -1,16 +1,16 @@
 import { User } from "../models/user.model.js"
-import { Tag } from "../models/Tags.model.js"
+import { Category } from "../models/Category.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { Course } from "../models/course.model.js"
 async function createcourse(req, res) {
     try {
         let {
-            courseName, courseDescription, whatYouWillLearn, price, tag
+            courseName, courseDescription, whatYouWillLearn, price, category
         } = req.body
 
         const thumbnail = req.files.thumbnailImage
 
-        if (!courseDescription || !courseName || !whatYouWillLearn || !price || !tag || !thumbnail) {
+        if (!courseDescription || !courseName || !whatYouWillLearn || !price || !category || !thumbnail) {
             res.status(400).json({
                 message: "please send all the required fields"
 
@@ -27,11 +27,11 @@ async function createcourse(req, res) {
                 message: "instructordetails not found"
             })
 
-        const tagdetails = await Tag.findById(tag)
+        const categorydetails = await Category.findById(category)
 
-        if (!tagdetails)
+        if (!categorydetails)
             res.status(400).json({
-                message: "no such tag found"
+                message: "no such category found"
             })
 
         const thumbnailImage = await uploadOnCloudinary(thumbnail, process.env.FOLDER_NAME)
@@ -43,7 +43,7 @@ async function createcourse(req, res) {
             instructor: instructordetails._id,
             whatYouWillLearn,
             price,
-            tag: tagdetails._id,
+            category: categorydetails._id,
             thumbnail: thumbnailImage
         })
 
@@ -55,7 +55,7 @@ async function createcourse(req, res) {
             }
         }, { new: true })
 
-        await Tag.findByIdAndUpdate({ _id: tag }, {
+        await Category.findByIdAndUpdate({ _id: category }, {
             $push: {
                 course: newcourse._id
             }

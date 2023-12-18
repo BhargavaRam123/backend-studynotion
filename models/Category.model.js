@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-let tagschema = new mongoose.Schema({
+let categoryschema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -14,4 +14,4 @@ let tagschema = new mongoose.Schema({
     }]
 })
 
-export const Tag = mongoose.model("Tag", tagschema)
+export const Category = mongoose.model("Category", categoryschema)

@@ -1,6 +1,6 @@
-import { Tag } from "../models/Tags.model.js";
+import { Category } from "../models/Category.model.js";
 
-async function createTag(req, res) {
+async function createcategory(req, res) {
 
     try {
         const { name, description } = req.body
@@ -10,32 +10,32 @@ async function createTag(req, res) {
                 message: "Enter both name and description"
             })
 
-        const tag = await Tag.create({
+        const category = await Category.create({
             name,
             description
         }, { new: true })
 
         res.status(200).json({
-            message: "Tag successfully created"
+            message: "Category successfully created"
         })
     } catch (error) {
 
         res.status(400).json({
-            message: "something went wrong in the createtag function"
+            message: "something went wrong in the createcategory function"
         })
     }
 }
 
-async function getalltags(req, res) {
+async function getallcategories(req, res) {
     try {
-        const alltags = await Tag.find()
+        const allcategories = await Category.find()
         res.status(200).json({
-            message: "all tags are successfully retrieved",
-            tag: alltags
+            message: "all categories are successfully retrieved",
+            category: allcategories
         })
     } catch (error) {
         res.status(400).json({
-            message: "something went wrong in the getalltags function"
+            message: "something went wrong in the getall Categoryfunction"
         })
     }
 }
