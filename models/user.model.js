@@ -10,7 +10,6 @@ let userschema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-
     },
     email: {
         type: String,

@@ -17,7 +17,7 @@ let courseschema = new mongoose.Schema({
     },
     courseContent: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "RatingAndReview",
+        ref: "Section",
     }],
     price: {
         type: Number,
@@ -28,6 +28,9 @@ let courseschema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
+    },
+    tags: {
+        type: String
     },
     studentsEnrolled: [{
         type: mongoose.Schema.Types.ObjectId,
