@@ -17,6 +17,7 @@ async function auth(req, res, next) {
         try {
             const decode = await jwt.verify(token, process.env.JWT_SECRET)
             console.log(decode)
+            req.user = decode
         } catch (error) {
             console.log("error occured while verifying the token in the middleware")
             res.status(400).json({

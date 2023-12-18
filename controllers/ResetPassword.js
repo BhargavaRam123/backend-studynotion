@@ -72,3 +72,5 @@ async function resetpassword(req, res) {
         })
     }
 }
+
+export { resetpasswordtoken, resetpassword }
