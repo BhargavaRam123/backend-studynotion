@@ -71,3 +71,49 @@ async function capturePayment(req, res) {
     }
 
 }
+
+async function verifysignature(req, res) {
+    const webhooksecret = "123456789"
+
+    const signature = req.headers["x-razorpay-signature"]
+
+    const shasum = crypto.createHmac("sha256", webhooksecret)
+    shasum.update(JSON.stringify(req.body))
+    const digest = shasum.digest("hex")
+
+    if (digest === signature) {
+        console.log("payment authorized")
+
+        const { courseid, userid } = req.body.payload.payment.entity.notes;
+        try {
+            const course = await Course.findByIdAndUpdate({ _id: courseid }, { $push: { studentsEnrolled: userid } }, { new: true }).populate("studentsEnrolled")
+
+            if (!course) {
+                res.status(400).json({
+                    message: "course not found"
+                })
+            }
+
+            const user = await User.findByIdAndUpdate({ _id: userid }, { $push: { courses: courseid } }, { new: true }).populate("courses")
+
+            const emailresponse = await mailsender(user.email, "course successfully purchased", "congrats dude")
+
+            console.log(emailresponse)
+
+            res.status(200).json({
+                message: "course purchased successfully"
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: "something went wrong in verifysignature function"
+            })
+            console.log("something went wrong in verifysignature function", error.message)
+        }
+
+    }
+    else {
+        res.status(400).json({
+            message: "something went wrong in verifysignature function"
+        })
+    }
+}
