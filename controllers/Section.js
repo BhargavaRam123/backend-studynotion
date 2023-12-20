@@ -1,5 +1,5 @@
 import { Section } from "../models/section.model.js"
-import { Course } from "../models/Course.model.js"
+import { Course } from "../models/course.model.js"
 
 
 async function createsection(req, res) {
@@ -88,3 +88,4 @@ async function deletesection(req, res) {
 
 
 }
+export { createsection, updatesection, deletesection }

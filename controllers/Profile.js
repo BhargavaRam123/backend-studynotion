@@ -49,4 +49,4 @@ async function deleteaccount(req, res) {
     }
 }
 
-
+export { updateprofile, deleteaccount }

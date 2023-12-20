@@ -74,7 +74,6 @@ async function createcourse(req, res) {
     }
 }
 
-
 // get all courses
 
 async function getallcourses(req, res) {
@@ -93,3 +92,41 @@ async function getallcourses(req, res) {
         console.log("something went wrong in getallcourses():", error.message)
     }
 }
+
+
+async function getcoursedetails(req, res) {
+    try {
+        const { courseid } = req.body
+
+        const course = await Course.findById({ _id: courseid }).populate({
+            path: "instructor",
+            populate: {
+                path: "additionalDetails"
+            }
+        }).populate({
+            path: "courseContent", populate: {
+                path: "subSection"
+            }
+        })
+            .populate("category")
+            .populate("studentsEnrolled")
+        if (!course)
+            res.status(400).json({
+                message: "could not find the course",
+            })
+
+        res.status(200).json({
+            message: "course details fetched successfully",
+            coursedetails: course
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: "someting went wrong in getcoursedetails"
+
+        })
+        console.log("something went wrong in getcoursedetails():", error.message)
+    }
+
+}
+
+export { createcourse, getallcourses, getcoursedetails }

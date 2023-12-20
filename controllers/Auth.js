@@ -65,7 +65,6 @@ async function sendotp(req, res) {
 
 }
 
-
 async function signup(req, res) {
     // sign up user
 
@@ -211,4 +210,4 @@ async function changepassword(req, res) {
 
 }
 
-export { sendotp, signup, changepassword }
+export { sendotp, signup, changepassword, login }

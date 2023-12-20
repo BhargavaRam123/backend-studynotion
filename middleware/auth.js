@@ -43,6 +43,7 @@ async function isstudent(req, res, next) {
                 message: "this is protected route for students"
             })
         }
+        next()
     } catch (error) {
         console.log("error occured in isstudent middleware:", error.message)
         res.status(400).json({
@@ -61,6 +62,7 @@ async function isadmin(req, res, next) {
                 message: "this is protected route for admin"
             })
         }
+        next()
     } catch (error) {
         console.log("error occured in isadmin middleware:", error.message)
         res.status(400).json({
@@ -80,6 +82,7 @@ async function isinstructor(req, res, next) {
                 message: "this is protected route for instructors"
             })
         }
+        next()
     } catch (error) {
         console.log("error occured in isinstructor middleware:", error.message)
         res.status(400).json({
